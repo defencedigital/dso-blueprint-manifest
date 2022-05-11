@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: post-deployment-<prj-name>-
+  name: post-deployment-<prj-name>
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: trigger-post-deployment-pipeline
+        image: curlimages/curl
+        command: ["/bin/sh"]
+        args: ["-c", "curl --location --request POST 'https://el-<prj-name>-pd-trigger-dso-<prj-name>.apps.ocp1.azure.dso.digital.mod.uk/' --header 'Content-Type: application/json' --data-raw '{}' --insecure"]
+
+      restartPolicy: Never
+  backoffLimit: 2

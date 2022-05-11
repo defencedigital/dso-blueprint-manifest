@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: dso-<prj-name>
+  namespace: dso-<prj-name>
+spec:
+  host: dso-<prj-name>.apps.ocp1.azure.dso.digital.mod.uk
+  to:
+    kind: Service
+    name: <prj-name>-service
+    weight: 100
+  port:
+    targetPort: 3000
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

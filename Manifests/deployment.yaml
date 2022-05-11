@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <prj-name>-deployment
+  labels:
+    app: <prj-name>
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <prj-name>
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: <prj-name>
+    spec:
+      containers:
+        - name: <prj-name>
+          image: <prj-name>:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000

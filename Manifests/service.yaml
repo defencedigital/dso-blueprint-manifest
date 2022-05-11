@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: <prj-name>
+    app.kubernetes.io/instance: <prj-name>
+  name: <prj-name>-service
+  namespace: dso-<prj-name>
+spec:
+  ports:
+    - appProtocol: tcp
+      port: 3000
+      targetPort: 3000
+  selector:
+    app: <prj-name>
+  type: ClusterIP
